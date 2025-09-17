@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog List Layout 10 — Single Section</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --page-max-width: 1200px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-7: 32px;
+      --space-8: 40px;
+      --space-9: 56px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --color-bg: #ffffff;
+      --color-surface: #f8fafc;
+      --color-card: #ffffff;
+      --color-border: #e5e7eb;
+      --color-text: #0f172a;
+      --color-text-secondary: #475569;
+      --color-muted: #94a3b8;
+      --color-primary: #6d28d9;
+      --color-primary-600: #7c3aed;
+      --color-chip: #0ea5e9;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; background: var(--color-bg); color: var(--color-text); }
+
+    body { font-family: Lato, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; line-height: 1.6; }
+
+    img { max-width: 100%; height: auto; display: block; }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container { width: 100%; max-width: var(--page-max-width); margin: 0 auto; padding: 0 var(--space-6); }
+
+    /* Header */
+    .header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); padding: var(--space-6) 0; border-bottom: 1px solid var(--color-border); }
+    .brand { display: flex; align-items: center; gap: var(--space-3); font-family: Poppins, Lato, sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+    .brand img { height: 36px; width: auto; }
+    .nav { display: flex; align-items: center; gap: var(--space-5); }
+    .nav a { color: var(--color-text-secondary); font-weight: 700; }
+    .nav a:hover { color: var(--color-text); }
+
+    /* Heading (Layout 10 title) */
+    .blog_list_heading_section { padding: var(--space-8) 0 var(--space-4); }
+    .blog_list_heading h2 { margin: 0; text-transform: uppercase; font-family: Poppins, Lato, sans-serif; font-size: clamp(18px, 3.5vw, 24px); letter-spacing: 0.03em; }
+
+    /* Blog List Layout 10 */
+    .blog_list_section { padding: var(--space-4) 0 var(--space-8); }
+    .blog_row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
+    .blog_column_upper_space { margin-top: var(--space-7); }
+
+    .blog__box { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-card); box-shadow: var(--shadow-sm); }
+
+    .blog_top_content { padding: var(--space-6) var(--space-6) 0; }
+    .blog_title h2 { margin: 0 0 var(--space-4); font-family: Poppins, Lato, sans-serif; font-weight: 800; font-size: 20px; line-height: 1.3; letter-spacing: -0.01em; }
+
+    .blog_image { position: relative; border-radius: var(--radius-md); overflow: hidden; }
+    .blog_image img { width: 100%; height: auto; transition: transform 220ms ease; }
+    .blog__box:hover .blog_image img { transform: scale(1.02); }
+
+    .blog_cat_date_wrapper { position: absolute; left: var(--space-5); bottom: var(--space-5); display: inline-flex; align-items: center; gap: var(--space-3); }
+    .blog_category h4, .blog_date h4 { margin: 0; padding: 6px 10px; font-size: 12px; line-height: 1; font-weight: 800; color: #fff; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .blog_category h4 { background: var(--color-chip); }
+    .blog_date h4 { background: rgba(15, 23, 42, 0.8); }
+
+    .blog_bottom_content { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+
+    .blog_author_comment_wrapper { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+    .blog_author_wrapper { display: inline-flex; align-items: center; gap: var(--space-3); }
+    .blog_author_image img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #fff; box-shadow: var(--shadow-sm); }
+    .blog_author_name h3 { margin: 0; font-size: 14px; font-weight: 800; }
+
+    .blog_comment h4 { margin: 0; font-size: 12px; font-weight: 800; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+
+    .blog_para p { margin: 0; color: var(--color-text-secondary); }
+
+    .read_more_btn a { display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border-radius: 10px; font-weight: 800; color: #fff; background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary)); box-shadow: var(--shadow-sm); }
+    .read_more_btn a:hover { filter: brightness(1.05); box-shadow: var(--shadow-md); }
+
+    /* Footer */
+    .footer { padding: var(--space-8) 0; margin-top: var(--space-8); border-top: 1px solid var(--color-border); color: var(--color-muted); font-size: 14px; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .blog_row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .nav { display: none; }
+      .blog_row { grid-template-columns: 1fr; }
+      .blog_column_upper_space { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Only one section is used on this page -->
+  <section id="page" aria-label="Blog list layout 10">
+
+    <!-- container: header -->
+    <div class="container">
+      <div class="header">
+        <div class="brand">
+          <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/logo-images/site-logo.png" alt="BlogsQode" />
+          <span>BlogsQode</span>
+        </div>
+        <nav class="nav" aria-label="Main">
+          <a href="#">General</a>
+          <a href="#">Slider</a>
+          <a href="#">Default</a>
+          <a href="#">Single Blog</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- container: layout 10 heading -->
+    <div class="container">
+      <div class="blog_list_heading_section">
+        <div class="blog_list_heading_content">
+          <div class="blog_list_heading">
+            <h2>blog list layout 10</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- container: layout 10 grid -->
+    <div class="container">
+      <div class="blog_list_section">
+        <div class="blog_row">
+
+          <!-- Post 1 -->
+          <div class="blog_column blog_1st_post">
+            <div class="blog__box">
+              <div class="blog_top_content">
+                <div class="blog_title"><h2>NFT’s are too important for best artists</h2></div>
+                <div class="blog_image">
+                  <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/even-list-images/blog-list-image-1.jpg" alt="blog-image" />
+                  <div class="blog_cat_date_wrapper">
+                    <div class="blog_category"><h4>design</h4></div>
+                    <div class="blog_date"><h4>31 January 2022</h4></div>
+                  </div>
+                </div>
+              </div>
+              <div class="blog_bottom_content">
+                <div class="blog_author_comment_wrapper">
+                  <div class="blog_author_wrapper">
+                    <div class="blog_author_image">
+                      <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/author-images/author-1.png" alt="author-1" />
+                    </div>
+                    <div class="blog_author_name"><h3>Johan Martin</h3></div>
+                  </div>
+                  <div class="blog_comment"><h4>05 Comment</h4></div>
+                </div>
+                <div class="blog_para"><p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without...</p></div>
+                <div class="read_more_btn"><a href="#">read more</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post 2 -->
+          <div class="blog_column blog_2nd_post">
+            <div class="blog__box">
+              <div class="blog_top_content">
+                <div class="blog_title"><h2>Invalided purpose classes &amp; motivation</h2></div>
+                <div class="blog_image">
+                  <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/even-list-images/blog-list-image-2.jpg" alt="blog-image" />
+                  <div class="blog_cat_date_wrapper">
+                    <div class="blog_category"><h4>marketing</h4></div>
+                    <div class="blog_date"><h4>29 January 2022</h4></div>
+                  </div>
+                </div>
+              </div>
+              <div class="blog_bottom_content">
+                <div class="blog_author_comment_wrapper">
+                  <div class="blog_author_wrapper">
+                    <div class="blog_author_image">
+                      <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/author-images/author-2.png" alt="author-2" />
+                    </div>
+                    <div class="blog_author_name"><h3>Tyler Covington</h3></div>
+                  </div>
+                  <div class="blog_comment"><h4>10 Comment</h4></div>
+                </div>
+                <div class="blog_para"><p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without...</p></div>
+                <div class="read_more_btn"><a href="#">read more</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post 3 -->
+          <div class="blog_column blog_3rd_post">
+            <div class="blog__box">
+              <div class="blog_top_content">
+                <div class="blog_title"><h2>Search your rare art from best artist</h2></div>
+                <div class="blog_image">
+                  <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/even-list-images/blog-list-image-3.jpg" alt="blog-image" />
+                  <div class="blog_cat_date_wrapper">
+                    <div class="blog_category"><h4>art</h4></div>
+                    <div class="blog_date"><h4>27 January 2022</h4></div>
+                  </div>
+                </div>
+              </div>
+              <div class="blog_bottom_content">
+                <div class="blog_author_comment_wrapper">
+                  <div class="blog_author_wrapper">
+                    <div class="blog_author_image">
+                      <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/author-images/author-3.png" alt="author-3" />
+                    </div>
+                    <div class="blog_author_name"><h3>Fred Carpenter</h3></div>
+                  </div>
+                  <div class="blog_comment"><h4>02 Comment</h4></div>
+                </div>
+                <div class="blog_para"><p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without...</p></div>
+                <div class="read_more_btn"><a href="#">read more</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post 4 -->
+          <div class="blog_column blog_4th_post blog_column_upper_space">
+            <div class="blog__box">
+              <div class="blog_top_content">
+                <div class="blog_title"><h2>Golden state announce legacy NFT collection</h2></div>
+                <div class="blog_image">
+                  <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/even-list-images/blog-list-image-4.jpg" alt="blog-image" />
+                  <div class="blog_cat_date_wrapper">
+                    <div class="blog_category"><h4>nft</h4></div>
+                    <div class="blog_date"><h4>25 January 2022</h4></div>
+                  </div>
+                </div>
+              </div>
+              <div class="blog_bottom_content">
+                <div class="blog_author_comment_wrapper">
+                  <div class="blog_author_wrapper">
+                    <div class="blog_author_image">
+                      <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/author-images/author-4.png" alt="author-4" />
+                    </div>
+                    <div class="blog_author_name"><h3>Salvador Dali</h3></div>
+                  </div>
+                  <div class="blog_comment"><h4>01 Comment</h4></div>
+                </div>
+                <div class="blog_para"><p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without...</p></div>
+                <div class="read_more_btn"><a href="#">read more</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post 5 -->
+          <div class="blog_column blog_5th_post blog_column_upper_space">
+            <div class="blog__box">
+              <div class="blog_top_content">
+                <div class="blog_title"><h2>Provide a rare theme in this market</h2></div>
+                <div class="blog_image">
+                  <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/even-list-images/blog-list-image-5.jpg" alt="blog-image" />
+                  <div class="blog_cat_date_wrapper">
+                    <div class="blog_category"><h4>marketing</h4></div>
+                    <div class="blog_date"><h4>21 January 2022</h4></div>
+                  </div>
+                </div>
+              </div>
+              <div class="blog_bottom_content">
+                <div class="blog_author_comment_wrapper">
+                  <div class="blog_author_wrapper">
+                    <div class="blog_author_image">
+                      <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/author-images/author-5.png" alt="author-5" />
+                    </div>
+                    <div class="blog_author_name"><h3>Melina Martin</h3></div>
+                  </div>
+                  <div class="blog_comment"><h4>20 Comment</h4></div>
+                </div>
+                <div class="blog_para"><p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without...</p></div>
+                <div class="read_more_btn"><a href="#">read more</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post 6 -->
+          <div class="blog_column blog_6th_post blog_column_upper_space">
+            <div class="blog__box">
+              <div class="blog_top_content">
+                <div class="blog_title"><h2>Great image for great artists and NFT's</h2></div>
+                <div class="blog_image">
+                  <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/even-list-images/blog-list-image-6.jpg" alt="blog-image" />
+                  <div class="blog_cat_date_wrapper">
+                    <div class="blog_category"><h4>gif</h4></div>
+                    <div class="blog_date"><h4>18 January 2022</h4></div>
+                  </div>
+                </div>
+              </div>
+              <div class="blog_bottom_content">
+                <div class="blog_author_comment_wrapper">
+                  <div class="blog_author_wrapper">
+                    <div class="blog_author_image">
+                      <img src="https://up2client.com/envato/blogsqode-v4.0/previewpage/assets/images/blog-list-images/author-images/author-6.png" alt="author-6" />
+                    </div>
+                    <div class="blog_author_name"><h3>Mark Anderson</h3></div>
+                  </div>
+                  <div class="blog_comment"><h4>08 Comment</h4></div>
+                </div>
+                <div class="blog_para"><p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without...</p></div>
+                <div class="read_more_btn"><a href="#">read more</a></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- container: footer -->
+    <div class="container">
+      <div class="footer">© 2025 BlogsQode. All rights reserved.</div>
+    </div>
+
+  </section>
+</body>
+</html>
